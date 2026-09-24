@@ -1,0 +1,2342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Insights - Making Finance Simple for Everyone</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #1a3a5f;
+            --secondary-color: #f8b500;
+            --accent-color: #e63946;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white !important;
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,0.85) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), #2c5282);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff10" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,149.3C672,149,768,171,864,165.3C960,160,1056,128,1152,122.7C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--secondary-color);
+            border: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: black;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .section-padding {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin-bottom: 50px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            height: 100%;
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+        
+        /* Financial Tools in Hero Section */
+        .financial-tools-hero {
+            margin-top: 60px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .financial-tools-hero .section-title {
+            color: white;
+        }
+        
+        .financial-tools-hero .section-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .feature-card-hero {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            height: 100%;
+            border-top: 4px solid var(--secondary-color);
+        }
+        
+        .feature-card-hero:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .feature-card-hero .feature-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card-hero h4 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card-hero p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Calculators in Hero Section */
+        .calculators-hero {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 60px;
+        }
+        
+        .calculators-hero .section-title {
+            color: white;
+        }
+        
+        .calculators-hero .section-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .calculators-hero .calculator-tabs {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .calculators-hero .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .calculators-hero .nav-link.active {
+            color: white;
+        }
+        
+        .calculators-hero .nav-link.active::after {
+            background: var(--secondary-color);
+        }
+        
+        .calculators-hero .calculator-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .calculators-hero .form-label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .calculators-hero .form-control,
+        .calculators-hero .form-select {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+        
+        .calculators-hero .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .calculators-hero .form-control:focus,
+        .calculators-hero .form-select:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.25rem rgba(248, 181, 0, 0.25);
+            color: white;
+        }
+        
+        .calculators-hero .results-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: none;
+        }
+        
+        .calculators-hero .result-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .calculators-hero .result-value {
+            color: white;
+        }
+        
+        .calculators-hero .alert-info {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .calculator-tabs {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .calculator-tabs .nav-link {
+            border: none;
+            color: #6c757d;
+            font-weight: 600;
+            padding: 15px 25px;
+            border-radius: 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .calculator-tabs .nav-link.active {
+            color: var(--primary-color);
+            background: transparent;
+        }
+        
+        .calculator-tabs .nav-link.active::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--secondary-color);
+        }
+        
+        .calculator-form {
+            background: var(--light-bg);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+            padding: 12px 15px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.25rem rgba(248, 181, 0, 0.25);
+        }
+        
+        .results-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            display: none;
+        }
+        
+        .result-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            font-weight: 600;
+            color: #6c757d;
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 30px;
+        }
+        
+        .team-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        
+        .team-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .team-role {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 50px 0 30px;
+        }
+        
+        .footer-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .footer-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            display: block;
+            padding: 5px 0;
+            transition: all 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            margin-top: 30px;
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .learning-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            height: 100%;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .learning-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .learning-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .learning-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+        
+        .modal-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 15px 15px 0 0;
+            border: none;
+        }
+        
+        .modal-title {
+            font-weight: 700;
+        }
+        
+        .btn-close {
+            filter: brightness(0) invert(1);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .modal-body h5 {
+            color: var(--primary-color);
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .modal-body h5:first-child {
+            margin-top: 0;
+        }
+        
+        .modal-body ul {
+            padding-left: 20px;
+        }
+        
+        .modal-body li {
+            margin-bottom: 10px;
+        }
+        
+        .key-point {
+            background-color: var(--light-bg);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 20px 0;
+        }
+        
+        .example-box {
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .bank-suggestion-form {
+            background: var(--light-bg);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .bank-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .bank-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .bank-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .bank-logo {
+            width: 60px;
+            height: 60px;
+            background: var(--light-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .bank-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .bank-details {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .bank-detail-item {
+            flex: 1 0 50%;
+            padding: 10px 0;
+        }
+        
+        .bank-detail-label {
+            font-weight: 600;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .bank-detail-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+        
+        .bank-highlight {
+            background: var(--light-bg);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .bank-highlight-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .apply-btn {
+            background-color: var(--secondary-color);
+            border: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.3s;
+            margin-top: 15px;
+        }
+        
+        .apply-btn:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        
+        .no-results i {
+            font-size: 4rem;
+            color: #dee2e6;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .financial-tools-hero {
+                margin-top: 40px;
+                margin-bottom: 30px;
+            }
+            
+            .calculators-hero {
+                margin-bottom: 40px;
+            }
+            
+            .bank-detail-item {
+                flex: 1 0 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="bi bi-cash-coin me-2"></i>Financial Insights</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#calculators">Calculators</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#learning">Learning Center</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    
+                    <li class="nav-item ms-lg-3" id="loggedOutView">
+                        <button class="btn btn-outline-light btn-sm mt-2 mt-lg-0 me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            Login
+                        </button>
+                        <button class="btn btn-primary-custom btn-sm mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#signupModal">
+                            <i class="bi bi-person-circle me-1"></i> Sign Up
+                        </button>
+                    </li>
+
+                    <li class="nav-item ms-lg-3 d-none d-lg-flex align-items-center" id="loggedInView">
+                        <span class="text-white me-3 fw-bold" id="userGreeting">Welcome!</span>
+                        <button class="btn btn-danger btn-sm mt-2 mt-lg-0" id="logoutButton">
+                            Logout
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center hero-content">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">Financial Insights</h1>
+                    <p class="hero-subtitle">Making Finance Simple, Transparent & Accessible for Everyone</p>
+                    <p class="mb-4">Understand loans, insurance, and investments with clarity. Make informed financial decisions with our easy-to-use tools.</p>
+                    <a href="#calculators" class="btn btn-primary-custom btn-lg">Get Started <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <i class="bi bi-graph-up-arrow" style="font-size: 15rem; opacity: 0.2;"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Our Financial Tools Section -->
+            <div class="financial-tools-hero">
+                <div class="text-center mb-4">
+                    <h2 class="section-title text-white">Our Financial Tools</h2>
+                    <p class="section-subtitle text-white-50">Powerful calculators to simplify complex financial decisions</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="feature-card-hero">
+                            <div class="feature-icon">
+                                <i class="bi bi-calculator"></i>
+                            </div>
+                            <h4>EMI Calculator</h4>
+                            <p>Calculate your loan EMIs with detailed principal and interest breakdown</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="feature-card-hero">
+                            <div class="feature-icon">
+                                <i class="bi bi-mortarboard"></i>
+                            </div>
+                            <h4>Education Loan</h4>
+                            <p>Plan your education loan repayment with detailed cost breakdowns</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="feature-card-hero">
+                            <div class="feature-icon">
+                                <i class="bi bi-bank"></i>
+                            </div>
+                            <h4>Bank Suggestion</h4>
+                            <p>Find the best banks for your loan based on your financial profile</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="feature-card-hero">
+                            <div class="feature-icon">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <h4>Insurance Explainer</h4>
+                            <p>Understand insurance policies, premiums, coverage, and payouts</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Calculators Section -->
+            <div class="calculators-hero" id="calculators">
+                <div class="text-center mb-4">
+                    <h2 class="section-title text-white">Financial Calculators</h2>
+                    <p class="section-subtitle text-white-50">Interactive tools to help you make informed financial decisions</p>
+                </div>
+                
+                <ul class="nav nav-tabs calculator-tabs" id="calculatorTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="emi-tab" data-bs-toggle="tab" data-bs-target="#emi" type="button" role="tab">
+                            <i class="bi bi-calculator me-2"></i>EMI Calculator
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="education-tab" data-bs-toggle="tab" data-bs-target="#education" type="button" role="tab">
+                            <i class="bi bi-mortarboard me-2"></i>Education Loan
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="bank-tab" data-bs-toggle="tab" data-bs-target="#bank" type="button" role="tab">
+                            <i class="bi bi-bank me-2"></i>Bank Suggestion
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="insurance-tab" data-bs-toggle="tab" data-bs-target="#insurance" type="button" role="tab">
+                            <i class="bi bi-shield-check me-2"></i>Insurance
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="gold-tab" data-bs-toggle="tab" data-bs-target="#gold" type="button" role="tab">
+                            <i class="bi bi-currency-rupee me-2"></i>Gold Loan
+                        </button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="calculatorTabContent">
+                    <div class="tab-pane fade show active" id="emi" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="calculator-form">
+                                    <h4 class="mb-4">Loan Details</h4>
+                                    <div class="mb-3">
+                                        <label class="form-label">Loan Amount (₹)</label>
+                                        <input type="number" class="form-control" id="loanAmount" placeholder="e.g. 500000">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Interest Rate (%)</label>
+                                        <input type="number" class="form-control" id="interestRate" placeholder="e.g. 8.5" step="0.1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Loan Tenure (Years)</label>
+                                        <input type="number" class="form-control" id="loanTenure" placeholder="e.g. 20">
+                                    </div>
+                                    <button class="btn btn-primary-custom w-100" onclick="calculateEMI()">Calculate EMI</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="results-section" id="emiResults">
+                                    <h4 class="mb-4">EMI Calculation Results</h4>
+                                    <div class="result-item">
+                                        <div class="result-label">Monthly EMI</div>
+                                        <div class="result-value" id="monthlyEMI">₹0</div>
+                                    </div>
+                                    <div class="result-item">
+                                        <div class="result-label">Principal Amount</div>
+                                        <div class="result-value" id="principalAmount">₹0</div>
+                                    </div>
+                                    <div class="result-item">
+                                        <div class="result-label">Total Interest</div>
+                                        <div class="result-value" id="totalInterest">₹0</div>
+                                    </div>
+                                    <div class="result-item">
+                                        <div class="result-label">Total Payment</div>
+                                        <div class="result-value" id="totalPayment">₹0</div>
+                                    </div>
+                                    <div class="chart-container">
+                                        <canvas id="emiChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="education" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="calculator-form">
+                                    <h4 class="mb-4">Education Loan Details</h4>
+                                    <div class="mb-3">
+                                        <label class="form-label">Course Fee (₹)</label>
+                                        <input type="number" class="form-control" id="courseFee" placeholder="e.g. 1000000">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Interest Rate (%)</label>
+                                        <input type="number" class="form-control" id="eduInterestRate" placeholder="e.g. 9.5" step="0.1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Moratorium Period (Years)</label>
+                                        <input type="number" class="form-control" id="moratorium" placeholder="e.g. 1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Repayment Period (Years)</label>
+                                        <input type="number" class="form-control" id="repaymentPeriod" placeholder="e.g. 10">
+                                    </div>
+                                    <button class="btn btn-primary-custom w-100" onclick="calculateEducationLoan()">Calculate Repayment</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="results-section" id="educationResults">
+                                    <h4 class="mb-4">Education Loan Repayment</h4>
+                                    <div class="result-item">
+                                        <div class="result-label">Monthly EMI (after moratorium)</div>
+                                        <div class="result-value" id="eduEMI">₹0</div>
+                                    </div>
+                                    <div class="result-item">
+                                        <div class="result-label">Total Interest Payable</div>
+                                        <div class="result-value" id="eduTotalInterest">₹0</div>
+                                    </div>
+                                    <div class="result-item">
+                                        <div class="result-label">Total Repayment Amount</div>
+                                        <div class="result-value" id="eduTotalRepayment">₹0</div>
+                                    </div>
+                                    <div class="chart-container">
+                                        <canvas id="educationChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="bank" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="calculator-form">
+                                    <h4 class="mb-4">Find the Best Bank for Your Loan</h4>
+                                    <div class="mb-3">
+                                        <label class="form-label">Loan Amount Needed (₹)</label>
+                                        <input type="number" class="form-control" id="neededLoanAmount" placeholder="e.g. 1000000">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Monthly EMI You Can Afford (₹)</label>
+                                        <input type="number" class="form-control" id="affordableEMI" placeholder="e.g. 15000">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Collateral/Asset Type</label>
+                                        <select class="form-select" id="collateralType">
+                                            <option value="">Select an option</option>
+                                            <option value="property">Property</option>
+                                            <option value="gold">Gold</option>
+                                            <option value="fixed_deposit">Fixed Deposit</option>
+                                            <option value="shares">Shares/Securities</option>
+                                            <option value="none">No Collateral</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Collateral Value (₹)</label>
+                                        <input type="number" class="form-control" id="collateralValue" placeholder="e.g. 1500000">
+                                    </div>
+                                    <button class="btn btn-primary-custom w-100" onclick="findBestBanks()">Find Best Banks</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="results-section" id="bankResults">
+                                    <h4 class="mb-4">Recommended Banks for Your Loan</h4>
+                                    <div id="bankList"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="insurance" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="calculator-form">
+                                    <h4 class="mb-4">Insurance Policy Details</h4>
+                                    <div class="mb-3">
+                                        <label class="form-label">Policy Type</label>
+                                        <select class="form-select" id="policyType">
+                                            <option value="term">Term Insurance</option>
+                                            <option value="endowment">Endowment Plan</option>
+                                            <option value="ulip">ULIP</option>
+                                            <option value="health">Health Insurance</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Sum Assured (₹)</label>
+                                        <input type="number" class="form-control" id="sumAssured" placeholder="e.g. 5000000">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Annual Premium (₹)</label>
+                                        <input type="number" class="form-control" id="annualPremium" placeholder="e.g. 15000">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Policy Term (Years)</label>
+                                        <input type="number" class="form-control" id="policyTerm" placeholder="e.g. 20">
+                                    </div>
+                                    <button class="btn btn-primary-custom w-100" onclick="calculateInsurance()">Analyze Policy</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="results-section" id="insuranceResults">
+                                    <h4 class="mb-4">Insurance Analysis</h4>
+                                    <div class="result-item">
+                                        <div class="result-label">Total Premiums Paid</div>
+                                        <div class="result-value" id="totalPremiums">₹0</div>
+                                    </div>
+                                    <div class="result-item">
+                                        <div class="result-label">Coverage Ratio</div>
+                                        <div class="result-value" id="coverageRatio">0x</div>
+                                    </div>
+                                    <div class="result-item">
+                                        <div class="result-label">Annual Cost of Coverage</div>
+                                        <div class="result-value" id="costOfCoverage">₹0</div>
+                                    </div>
+                                    <div class="chart-container">
+                                        <canvas id="insuranceChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="gold" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="calculator-form">
+                                    <h4 class="mb-4">Gold Details</h4>
+                                    <div class="mb-3">
+                                        <label class="form-label">Gold Weight (grams)</label>
+                                        <input type="number" class="form-control" id="goldWeight" placeholder="e.g. 50">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Gold Purity (Carats)</label>
+                                        <select class="form-select" id="goldPurity">
+                                            <option value="24">24 Carat (99.9% pure)</option>
+                                            <option value="22">22 Carat (91.6% pure)</option>
+                                            <option value="20">20 Carat (83.3% pure)</option>
+                                            <option value="18">18 Carat (75% pure)</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Current Gold Rate (₹/gram)</label>
+                                        <input type="number" class="form-control" id="goldRate" placeholder="e.g. 5500" value="5500">
+                                    </div>
+                                    <button class="btn btn-primary-custom w-100" onclick="calculateGoldLoan()">Calculate Loan</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="results-section" id="goldResults">
+                                    <h4 class="mb-4">Gold Loan Eligibility</h4>
+                                    <div class="result-item">
+                                        <div class="result-label">Gold Value</div>
+                                        <div class="result-value" id="goldValue">₹0</div>
+                                    </div>
+                                    <div class="result-item">
+                                        <div class="result-label">Eligible Loan Amount (75% LTV)</div>
+                                        <div class="result-value" id="eligibleLoan">₹0</div>
+                                    </div>
+                                    <div class="result-item">
+                                        <div class="result-label">Loan-to-Value Ratio</div>
+                                        <div class="result-value">75%</div>
+                                    </div>
+                                    <div class="alert alert-info mt-4">
+                                        <i class="bi bi-info-circle me-2"></i>
+                                        <strong>Note:</strong> As per RBI guidelines, the maximum LTV ratio for gold loans is 75%.
+                                    </div>
+                                    <div class="chart-container">
+                                        <canvas id="goldChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learning" class="section-padding bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Learning Center</h2>
+                <p class="section-subtitle">Improve your financial literacy with our educational resources</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="learning-card">
+                        <div class="learning-icon text-primary">
+                            <i class="bi bi-book"></i>
+                        </div>
+                        <h5 class="learning-title">Understanding EMIs</h5>
+                        <p>Learn how Equated Monthly Installments work and how interest is calculated over the loan tenure.</p>
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#emiModal">
+                            Read More <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="learning-card">
+                        <div class="learning-icon text-warning">
+                            <i class="bi bi-currency-rupee"></i>
+                        </div>
+                        <h5 class="learning-title">Gold Loan Basics</h5>
+                        <p>Everything you need to know about using gold as collateral for loans and LTV ratios.</p>
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#goldModal">
+                            Read More <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="learning-card">
+                        <div class="learning-icon text-success">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h5 class="learning-title">Insurance Types</h5>
+                        <p>Compare different insurance policies and understand which one suits your needs best.</p>
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#insuranceModal">
+                            Read More <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="learning-card">
+                        <div class="learning-icon text-info">
+                            <i class="bi bi-mortarboard"></i>
+                        </div>
+                        <h5 class="learning-title">Education Loans</h5>
+                        <p>Guide to education loans, moratorium periods, and repayment options for students.</p>
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#educationModal">
+                            Read More <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="learning-card">
+                        <div class="learning-icon text-danger">
+                            <i class="bi bi-graph-up"></i>
+                        </div>
+                        <h5 class="learning-title">Investment Basics</h5>
+                        <p>Introduction to different investment options and how to start building wealth.</p>
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#investmentModal">
+                            Read More <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="learning-card">
+                        <div class="learning-icon text-secondary">
+                            <i class="bi bi-piggy-bank"></i>
+                        </div>
+                        <h5 class="learning-title">Saving Strategies</h5>
+                        <p>Effective saving techniques and budgeting tips for financial stability.</p>
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#savingModal">
+                            Read More <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section-padding">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">About Our Team</h2>
+                <p class="section-subtitle">Meet the passionate students behind Financial Insights</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <i class="bi bi-person"></i>
+                        </div>
+                        <h5 class="team-name">K.V. Trinadh</h5>
+                        <p class="team-role">CSD-C | 238R1A67F8</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <i class="bi bi-person"></i>
+                        </div>
+                        <h5 class="team-name">V. Sathvik</h5>
+                        <p class="team-role">CSD-C | 238R1A67K0</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <i class="bi bi-person"></i>
+                        </div>
+                        <h5 class="team-name">A.Siva Sai Pavan</h5>
+                        <p class="team-role">CSD-C | 238R1A67D2</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <i class="bi bi-person"></i>
+                        </div>
+                        <h5 class="team-name">Y. Shivakumar</h5>
+                        <p class="team-role">CSD-C | 238R1A67K2</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <i class="bi bi-person"></i>
+                        </div>
+                        <h5 class="team-name">B. Sarayu</h5>
+                        <p class="team-role">CSD-B | 248R1A6775</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <i class="bi bi-person"></i>
+                        </div>
+                        <h5 class="team-name">Preethi Gupta</h5>
+                        <p class="team-role">CSD-B | 248R1A67C1</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5 p-4 bg-light rounded-3">
+                <h4 class="text-center mb-4">Project Details</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Team Name:</strong> SIH-TEAM21</p>
+                        <p><strong>Problem ID:</strong> SIH25132</p>
+                        <p><strong>Category:</strong> Student Innovation (Financial Services)</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Objective:</strong> Simplify financial services and promote financial literacy</p>
+                        <p><strong>Goal:</strong> Empower users to make informed financial decisions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="footer-title">Financial Insights</h5>
+                    <p>Making finance simple, transparent, and accessible for everyone.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <a href="#home" class="footer-link">Home</a>
+                    <a href="#calculators" class="footer-link">Calculators</a>
+                    <a href="#learning" class="footer-link">Learning Center</a>
+                    <a href="#about" class="footer-link">About Us</a>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="footer-title">Contact</h5>
+                    <p>Smart India Hackathon 2025</p>
+                    <p>Team ID: SIH-TEAM21</p>
+                    <p>Problem ID: SIH25132</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Financial Insights. All rights reserved. | SIH 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="emiModal" tabindex="-1" aria-labelledby="emiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emiModalLabel">Understanding EMIs (Equated Monthly Installments)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>What is an EMI?</h5>
+                    <p>An Equated Monthly Installment (EMI) is a fixed payment amount made by a borrower to a lender at a specified date each calendar month. EMIs are used to pay off both interest and principal each month so that over a specified number of years, the loan is paid off in full.</p>
+                    
+                    <div class="key-point">
+                        <strong>Key Point:</strong> EMI consists of two components - principal repayment and interest payment. The proportion of these components changes over the loan tenure.
+                    </div>
+                    
+                    <h5>How is EMI Calculated?</h5>
+                    <p>The EMI is calculated using the formula:</p>
+                    <div class="example-box">
+                        <strong>EMI = [P × R × (1+R)^N] / [(1+R)^N - 1]</strong><br>
+                        Where:<br>
+                        P = Principal loan amount<br>
+                        R = Monthly interest rate<br>
+                        N = Loan tenure in months
+                    </div>
+                    
+                    <h5>Understanding the EMI Structure</h5>
+                    <ul>
+                        <li><strong>Initial Period:</strong> A larger portion of your EMI goes towards interest payment</li>
+                        <li><strong>Middle Period:</strong> The interest and principal components become more balanced</li>
+                        <li><strong>Final Period:</strong> A larger portion goes towards principal repayment</li>
+                    </ul>
+                    
+                    <h5>Factors Affecting EMI</h5>
+                    <ul>
+                        <li><strong>Loan Amount:</strong> Higher loan amount means higher EMI</li>
+                        <li><strong>Interest Rate:</strong> Higher interest rate increases EMI</li>
+                        <li><strong>Loan Tenure:</strong> Longer tenure reduces EMI but increases total interest paid</li>
+                    </ul>
+                    
+                    <h5>Types of EMI Loans</h5>
+                    <ul>
+                        <li><strong>Fixed Rate EMI:</strong> Interest rate remains constant throughout the loan tenure</li>
+                        <li><strong>Floating Rate EMI:</strong> Interest rate changes based on market conditions</li>
+                        <li><strong>Step-up EMI:</strong> EMI increases gradually over time</li>
+                        <li><strong>Step-down EMI:</strong> EMI decreases gradually over time</li>
+                    </ul>
+                    
+                    <div class="key-point">
+                        <strong>Pro Tip:</strong> Making prepayments can significantly reduce your total interest burden. Even small additional payments can make a big difference over the long term.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="goldModal" tabindex="-1" aria-labelledby="goldModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="goldModalLabel">Gold Loan Basics</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>What is a Gold Loan?</h5>
+                    <p>A gold loan is a secured loan where borrowers pledge their gold ornaments or coins as collateral to avail funds from lenders. It's a quick and convenient way to meet urgent financial needs.</p>
+                    
+                    <div class="key-point">
+                        <strong>Key Point:</strong> Gold loans typically have lower interest rates compared to personal loans because they are secured against physical gold.
+                    </div>
+                    
+                    <h5>How Gold Loans Work</h5>
+                    <ul>
+                        <li>You pledge your gold jewelry or coins with the lender</li>
+                        <li>The lender evaluates the gold's purity and weight</li>
+                        <li>Based on the gold's value, the lender offers a loan amount</li>
+                        <li>You receive the loan amount after completing formalities</li>
+                        <li>Upon repayment, your gold is returned to you</li>
+                    </ul>
+                    
+                    <h5>Understanding LTV (Loan-to-Value) Ratio</h5>
+                    <p>The Loan-to-Value (LTV) ratio is the percentage of the gold's value that the lender is willing to lend. As per RBI guidelines:</p>
+                    <div class="example-box">
+                        <strong>Maximum LTV = 75%</strong><br>
+                        This means if your gold is worth ₹1,00,000, the maximum loan you can get is ₹75,000.
+                    </div>
+                    
+                    <h5>Gold Purity and Its Impact</h5>
+                    <ul>
+                        <li><strong>24 Carat:</strong> 99.9% pure gold - Highest value</li>
+                        <li><strong>22 Carat:</strong> 91.6% pure gold - Commonly used in jewelry</li>
+                        <li><strong>20 Carat:</strong> 83.3% pure gold</li>
+                        <li><strong>18 Carat:</strong> 75% pure gold</li>
+                    </ul>
+                    
+                    <h5>Advantages of Gold Loans</h5>
+                    <ul>
+                        <li><strong>Quick Processing:</strong> Loans can be disbursed within hours</li>
+                        <li><strong>Lower Interest Rates:</strong> Compared to unsecured loans</li>
+                        <li><strong>No Credit Score Required:</strong> Loan is secured against gold</li>
+                        <li><strong>Flexible Repayment:</strong> Various repayment options available</li>
+                        <li><strong>Continued Ownership:</strong> You retain ownership of your gold</li>
+                    </ul>
+                    
+                    <h5>Important Considerations</h5>
+                    <ul>
+                        <li>Understand the valuation process of your gold</li>
+                        <li>Be aware of processing fees and other charges</li>
+                        <li>Know the penalty for late payment or default</li>
+                        <li>Understand the gold safekeeping arrangements</li>
+                        <li>Check insurance coverage for pledged gold</li>
+                    </ul>
+                    
+                    <div class="key-point">
+                        <strong>Safety Tip:</strong> Always borrow from reputable lenders and ensure you get a proper receipt for your pledged gold. Keep all loan documents safely.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="insuranceModal" tabindex="-1" aria-labelledby="insuranceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="insuranceModalLabel">Understanding Insurance Types</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>What is Insurance?</h5>
+                    <p>Insurance is a contract (policy) in which an individual or entity receives financial protection or reimbursement against losses from an insurance company. The company pools clients' risks to make payments more affordable for the insured.</p>
+                    
+                    <div class="key-point">
+                        <strong>Key Point:</strong> Insurance works on the principle of risk pooling - many people pay small premiums to protect against large, unexpected losses.
+                    </div>
+                    
+                    <h5>Types of Life Insurance</h5>
+                    <ul>
+                        <li><strong>Term Insurance:</strong> Pure life cover for a specific period. No maturity benefits if you survive the term.</li>
+                        <li><strong>Endowment Plans:</strong> Combine insurance coverage with savings. Provide maturity benefits if you survive the term.</li>
+                        <li><strong>ULIPs (Unit Linked Insurance Plans):</strong> Combine insurance with investment. Part of premium goes to life cover, part to market-linked investments.</li>
+                        <li><strong>Money-Back Plans:</strong> Provide periodic survival benefits during the policy term.</li>
+                        <li><strong>Whole Life Insurance:</strong> Provides coverage for the entire lifetime of the insured.</li>
+                    </ul>
+                    
+                    <h5>Types of General Insurance</h5>
+                    <ul>
+                        <li><strong>Health Insurance:</strong> Covers medical expenses due to illness or injury.</li>
+                        <li><strong>Motor Insurance:</strong> Mandatory insurance for vehicles covering damage, theft, and third-party liability.</li>
+                        <li><strong>Home Insurance:</strong> Protects your home and belongings against damage or theft.</li>
+                        <li><strong>Travel Insurance:</strong> Covers unexpected events during travel.</li>
+                        <li><strong>Business Insurance:</strong> Protects businesses against various risks.</li>
+                    </ul>
+                    
+                    <h5>Key Insurance Terms</h5>
+                    <ul>
+                        <li><strong>Premium:</strong> The amount you pay for the insurance policy</li>
+                        <li><strong>Sum Assured:</strong> The guaranteed amount the insurer will pay</li>
+                        <li><strong>Coverage:</strong> The risks and events covered by the policy</li>
+                        <li><strong>Deductible:</strong> The amount you pay before insurance coverage kicks in</li>
+                        <li><strong>Policy Term:</strong> The duration for which the policy is valid</li>
+                        <li><strong>Exclusions:</strong> Events or conditions not covered by the policy</li>
+                    </ul>
+                    
+                    <h5>How to Choose the Right Insurance</h5>
+                    <ul>
+                        <li>Assess your needs and financial goals</li>
+                        <li>Consider your age, income, and dependents</li>
+                        <li>Compare policies from different insurers</li>
+                        <li>Understand the claim settlement ratio</li>
+                        <li>Read the policy document carefully</li>
+                        <li>Consider the premium vs. benefits</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <strong>Example:</strong> A 30-year-old with dependents might need term insurance for income protection, while a 50-year-old might focus on health insurance for medical coverage.
+                    </div>
+                    
+                    <div class="key-point">
+                        <strong>Pro Tip:</strong> Review your insurance needs regularly - at least once a year or after major life events like marriage, childbirth, or buying a home.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="educationModal" tabindex="-1" aria-labelledby="educationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="educationModalLabel">Education Loans - Complete Guide</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>What is an Education Loan?</h5>
+                    <p>An education loan is a sum of money borrowed to finance post-secondary education or higher education-related expenses. These loans are designed to help students pay for tuition, books, supplies, and living expenses while pursuing their education.</p>
+                    
+                    <div class="key-point">
+                        <strong>Key Point:</strong> Education loans often have lower interest rates and more flexible repayment terms compared to other types of loans because they're considered an investment in human capital.
+                    </div>
+                    
+                    <h5>Types of Education Loans</h5>
+                    <ul>
+                        <li><strong>Undergraduate Loans:</strong> For bachelor's degree programs</li>
+                        <li><strong>Postgraduate Loans:</strong> For master's and doctoral programs</li>
+                        <li><strong>Professional Courses:</strong> For courses like medicine, engineering, management</li>
+                        <li><strong>Vocational Courses:</strong> For skill-based training programs</li>
+                        <li><strong>Study Abroad Loans:</strong> Specifically for international education</li>
+                    </ul>
+                    
+                    <h5>Understanding Moratorium Period</h5>
+                    <p>The moratorium period is a grace period during which you don't have to make loan repayments. It typically includes:</p>
+                    <ul>
+                        <li>Course period + 6 months to 1 year after course completion</li>
+                        <li>During this period, interest may or may not accrue</li>
+                        <li>Some loans offer simple interest during moratorium</li>
+                        <li>Others may compound interest during this period</li>
+                    </ul>
+                    
+                    <h5>Key Features of Education Loans</h5>
+                    <ul>
+                        <li><strong>Lower Interest Rates:</strong> Compared to personal loans</li>
+                        <li><strong>Flexible Repayment:</strong> Longer repayment tenures (up to 15 years)</li>
+                        <li><strong>Tax Benefits:</strong> Interest paid is tax-deductible under Section 80E</li>
+                        <li><strong>No Collateral:</strong> Up to certain loan amounts (typically ₹7.5 lakhs)</li>
+                        <li><strong>Prepayment Options:</strong> Usually without penalty</li>
+                    </ul>
+                    
+                    <h5>Eligibility Criteria</h5>
+                    <ul>
+                        <li>Indian citizen</li>
+                        <li>Age between 16-35 years (may vary)</li>
+                        <li>Admission to recognized course/institution</li>
+                        <li>Good academic record</li>
+                        <li>Co-applicant (usually parent/guardian) with steady income</li>
+                    </ul>
+                    
+                    <h5>Documents Required</h5>
+                    <ul>
+                        <li>Completed loan application form</li>
+                        <li>Admission letter from institution</li>
+                        <li>Fee structure from institution</li>
+                        <li>Academic records</li>
+                        <li>Identity and address proof</li>
+                        <li>Income proof of co-applicant</li>
+                        <li>Bank statements</li>
+                    </ul>
+                    
+                    <h5>Repayment Options</h5>
+                    <ul>
+                        <li><strong>Standard Repayment:</strong> Fixed EMIs after moratorium</li>
+                        <li><strong>Step-up Repayment:</strong> EMIs increase gradually with income growth</li>
+                        <li><strong>Extended Repayment:</strong> Longer tenure with lower EMIs</li>
+                        <li><strong>Prepayment:</strong> Pay off loan early without penalty</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <strong>Example:</strong> For a ₹10 lakh loan at 10% interest with 1-year moratorium and 10-year repayment:<br>
+                        - During moratorium: Interest accrues but no EMI<br>
+                        - After moratorium: Monthly EMI of approximately ₹13,215<br>
+                        - Total interest paid: ₹5,85,800
+                    </div>
+                    
+                    <div class="key-point">
+                        <strong>Pro Tip:</strong> Consider paying simple interest during the moratorium period if possible. This can significantly reduce your total interest burden over the loan tenure.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="investmentModal" tabindex="-1" aria-labelledby="investmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="investmentModalLabel">Investment Basics - Building Wealth</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>What is Investment?</h5>
+                    <p>Investment is the act of allocating money or resources to an asset, venture, or project with the expectation of generating income or profit. It's about making your money work for you over time.</p>
+                    
+                    <div class="key-point">
+                        <strong>Key Point:</strong> The power of compounding makes investing one of the most effective ways to build wealth over the long term.
+                    </div>
+                    
+                    <h5>Why Invest?</h5>
+                    <ul>
+                        <li><strong>Beat Inflation:</strong> Investments typically grow faster than inflation</li>
+                        <li><strong>Build Wealth:</strong> Create financial security and independence</li>
+                        <li><strong>Achieve Goals:</strong> Fund major life goals like buying a home or retirement</li>
+                        <li><strong>Generate Passive Income:</strong> Create additional income streams</li>
+                        <li><strong>Financial Security:</strong> Create a safety net for emergencies</li>
+                    </ul>
+                    
+                    <h5>Types of Investments</h5>
+                    <ul>
+                        <li><strong>Stocks:</strong> Ownership in companies. Potential for high returns but higher risk.</li>
+                        <li><strong>Bonds:</strong> Loans to governments or corporations. Lower risk, steady returns.</li>
+                        <li><strong>Mutual Funds:</strong> Pooled investments managed by professionals. Diversified portfolio.</li>
+                        <li><strong>Fixed Deposits:</strong> Bank deposits with fixed interest rates. Very low risk.</li>
+                        <li><strong>Real Estate:</strong> Property investment. Can provide rental income and appreciation.</li>
+                        <li><strong>Gold:</strong> Precious metal investment. Acts as a hedge against inflation.</li>
+                        <li><strong>PPF/EPF:</strong> Government-backed retirement savings. Tax benefits.</li>
+                    </ul>
+                    
+                    <h5>Understanding Risk and Return</h5>
+                    <ul>
+                        <li><strong>Low Risk:</strong> Fixed deposits, PPF, government bonds (4-8% returns)</li>
+                        <li><strong>Medium Risk:</strong> Corporate bonds, balanced mutual funds (8-12% returns)</li>
+                        <li><strong>High Risk:</strong> Stocks, sectoral funds (12%+ returns, but volatile)</li>
+                    </ul>
+                    
+                    <h5>Key Investment Principles</h5>
+                    <ul>
+                        <li><strong>Start Early:</strong> The earlier you start, the more time your money has to grow</li>
+                        <li><strong>Be Consistent:</strong> Regular investing through SIPs or systematic plans</li>
+                        <li><strong>Diversify:</strong> Don't put all your eggs in one basket</li>
+                        <li><strong>Think Long-term:</strong> Avoid reacting to short-term market fluctuations</li>
+                        <li><strong>Review Regularly:</strong> Monitor and rebalance your portfolio periodically</li>
+                    </ul>
+                    
+                    <h5>Power of Compounding</h5>
+                    <div class="example-box">
+                        <strong>Example:</strong> If you invest ₹10,000 monthly at 12% annual return:<br>
+                        - After 10 years: ₹23 lakh<br>
+                        - After 20 years: ₹99 lakh<br>
+                        - After 30 years: ₹3.5 crore<br>
+                        <em>The longer you invest, the more dramatic the compounding effect!</em>
+                    </div>
+                    
+                    <h5>Getting Started with Investing</h5>
+                    <ul>
+                        <li>Set clear financial goals</li>
+                        <li>Assess your risk tolerance</li>
+                        <li>Create an emergency fund first</li>
+                        <li>Start with simple investments like mutual funds</li>
+                        <li>Consider tax-saving investments</li>
+                        <li>Seek professional advice if needed</li>
+                    </ul>
+                    
+                    <div class="key-point">
+                        <strong>Pro Tip:</strong> Don't try to time the market. Time in the market is more important than timing the market. Start investing regularly and stay invested for the long term.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="savingModal" tabindex="-1" aria-labelledby="savingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="savingModalLabel">Saving Strategies - Financial Stability</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>Why Saving Matters</h5>
+                    <p>Saving is the foundation of financial health. It provides security, enables you to achieve goals, and gives you the freedom to make choices without financial stress. Saving is about setting aside money today for a better tomorrow.</p>
+                    
+                    <div class="key-point">
+                        <strong>Key Point:</strong> Saving isn't about deprivation; it's about making conscious choices to secure your financial future.
+                    </div>
+                    
+                    <h5>The 50/30/20 Rule</h5>
+                    <p>A popular budgeting framework that helps you balance your finances:</p>
+                    <ul>
+                        <li><strong>50% for Needs:</strong> Essential expenses like rent, food, utilities</li>
+                        <li><strong>30% for Wants:</strong> Lifestyle choices, entertainment, dining out</li>
+                        <li><strong>20% for Savings:</strong> Emergency fund, investments, debt repayment</li>
+                    </ul>
+                    
+                    <h5>Effective Saving Strategies</h5>
+                    <ul>
+                        <li><strong>Pay Yourself First:</strong> Save before you spend, not what's left after</li>
+                        <li><strong>Automate Savings:</strong> Set up automatic transfers to savings accounts</li>
+                        <li><strong>Track Expenses:</strong> Know where your money goes each month</li>
+                        <li><strong>Set Specific Goals:</strong> Save for specific purposes (emergency fund, vacation, home)</li>
+                        <li><strong>Reduce Unnecessary Expenses:</strong> Cut back on non-essential spending</li>
+                        <li><strong>Increase Income:</strong> Look for ways to earn more money</li>
+                    </ul>
+                    
+                    <h5>Building an Emergency Fund</h5>
+                    <p>An emergency fund is your financial safety net. It should cover 3-6 months of living expenses.</p>
+                    <ul>
+                        <li><strong>Why?</strong> Protects against job loss, medical emergencies, unexpected repairs</li>
+                        <li><strong>Where?</strong> Liquid and easily accessible (savings account, liquid funds)</li>
+                        <li><strong>How much?</strong> Start small, aim for ₹1 lakh, then build to 3-6 months' expenses</li>
+                    </ul>
+                    
+                    <h5>Smart Saving Tips</h5>
+                    <ul>
+                        <li><strong>Use Separate Accounts:</strong> Different accounts for different goals</li>
+                        <li><strong>Take Advantage of Tax Benefits:</strong> PPF, ELSS, tax-saving FDs</li>
+                        <li><strong>Avoid Lifestyle Inflation:</strong> Don't increase spending when income rises</li>
+                        <li><strong>Review Subscriptions:</strong> Cancel unused memberships and subscriptions</li>
+                        <li><strong>Cook at Home:</strong> Save significantly on food expenses</li>
+                        <li><strong>Buy in Bulk:</strong> For non-perishable items you use regularly</li>
+                    </ul>
+                    
+                    <h5>Saving for Different Life Stages</h5>
+                    <ul>
+                        <li><strong>Early Career (20s):</strong> Build emergency fund, start retirement savings</li>
+                        <li><strong>Mid Career (30s-40s):</strong> Save for children's education, home purchase</li>
+                        <li><strong>Pre-Retirement (50s):</strong> Maximize retirement savings, pay off debt</li>
+                        <li><strong>Retirement:</strong> Preserve savings, generate income</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <strong>Example:</strong> If you save ₹5,000 monthly at 6% interest:<br>
+                        - After 1 year: ₹61,800<br>
+                        - After 5 years: ₹3,50,000<br>
+                        - After 10 years: ₹8,20,000<br>
+                        <em>Small, consistent savings can grow significantly over time!</em>
+                    </div>
+                    
+                    <h5>Overcoming Common Saving Challenges</h5>
+                    <ul>
+                        <li><strong>"I don't have enough to save":</strong> Start with small amounts, even ₹100/day</li>
+                        <li><strong>"I'll save when I earn more":</strong> Start now, increase savings with income</li>
+                        <li><strong>"I have too much debt":</strong> Save while paying debt, build emergency fund first</li>
+                        <li><strong>"I don't know how to start":</strong> Begin with a simple savings account</li>
+                    </ul>
+                    
+                    <div class="key-point">
+                        <strong>Pro Tip:</strong> The best time to start saving was yesterday. The second best time is today. Don't wait for the "perfect" moment - start now, even if it's small.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create an Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="signupName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="signupEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="signupPassword" required>
+                        </div>
+                        <div id="signupAlert" class="alert d-none" role="alert"></div>
+                        <button type="submit" class="btn btn-primary-custom w-100">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Welcome Back</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <div id="loginAlert" class="alert d-none" role="alert"></div>
+                        <button type="submit" class="btn btn-primary-custom w-100">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const banks = [
+            {
+                name: "State Bank of India",
+                logo: "SBI",
+                interestRate: 8.5,
+                minLoanAmount: 50000,
+                maxLoanAmount: 5000000,
+                processingFee: 0.35,
+                prepaymentCharges: "Nil after 6 months",
+                maxTenure: 30,
+                acceptedCollateral: ["property", "gold", "fixed_deposit", "shares"],
+                specialFeatures: "Flexible repayment options, lowest interest rates for women"
+            },
+            {
+                name: "HDFC Bank",
+                logo: "HDFC",
+                interestRate: 8.75,
+                minLoanAmount: 100000,
+                maxLoanAmount: 10000000,
+                processingFee: 0.5,
+                prepaymentCharges: "2-4% depending on tenure",
+                maxTenure: 30,
+                acceptedCollateral: ["property", "fixed_deposit"],
+                specialFeatures: "Quick approval, doorstep service"
+            },
+            {
+                name: "ICICI Bank",
+                logo: "ICICI",
+                interestRate: 9.0,
+                minLoanAmount: 100000,
+                maxLoanAmount: 5000000,
+                processingFee: 1.0,
+                prepaymentCharges: "5% in first year, 3% in second year",
+                maxTenure: 20,
+                acceptedCollateral: ["property", "gold", "fixed_deposit"],
+                specialFeatures: "Online application, instant approval"
+            },
+            {
+                name: "Axis Bank",
+                logo: "AXIS",
+                interestRate: 8.65,
+                minLoanAmount: 50000,
+                maxLoanAmount: 5000000,
+                processingFee: 0.75,
+                prepaymentCharges: "Nil after 12 months",
+                maxTenure: 25,
+                acceptedCollateral: ["property", "gold", "fixed_deposit", "shares"],
+                specialFeatures: "Balance transfer facility, top-up loan option"
+            },
+            {
+                name: "Punjab National Bank",
+                logo: "PNB",
+                interestRate: 8.25,
+                minLoanAmount: 50000,
+                maxLoanAmount: 2000000,
+                processingFee: 0.5,
+                prepaymentCharges: "Nil after 6 months",
+                maxTenure: 20,
+                acceptedCollateral: ["property", "gold"],
+                specialFeatures: "Low processing fees, government bank security"
+            },
+            {
+                name: "Bank of Baroda",
+                logo: "BOB",
+                interestRate: 8.4,
+                minLoanAmount: 50000,
+                maxLoanAmount: 5000000,
+                processingFee: 0.35,
+                prepaymentCharges: "Nil after 12 months",
+                maxTenure: 30,
+                acceptedCollateral: ["property", "gold", "fixed_deposit"],
+                specialFeatures: "Special rates for existing customers, low interest rates"
+            }
+        ];
+
+        function calculateEMI() {
+            const principal = parseFloat(document.getElementById('loanAmount').value);
+            const annualRate = parseFloat(document.getElementById('interestRate').value);
+            const years = parseFloat(document.getElementById('loanTenure').value);
+            
+            if (!principal || !annualRate || !years) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            const monthlyRate = annualRate / 12 / 100;
+            const months = years * 12;
+            
+            const numerator = principal * monthlyRate * Math.pow(1 + monthlyRate, months);
+            const denominator = Math.pow(1 + monthlyRate, months) - 1;
+            const emi = numerator / denominator;
+            
+            const totalPayment = emi * months;
+            const totalInterest = totalPayment - principal;
+            
+            document.getElementById('monthlyEMI').textContent = '₹' + emi.toFixed(2);
+            document.getElementById('principalAmount').textContent = '₹' + principal.toFixed(2);
+            document.getElementById('totalInterest').textContent = '₹' + totalInterest.toFixed(2);
+            document.getElementById('totalPayment').textContent = '₹' + totalPayment.toFixed(2);
+            
+            // --- NEW: SAVE TO CLOUD IF LOGGED IN ---
+            const savedUser = localStorage.getItem('financial_user');
+            if (savedUser) {
+                const user = JSON.parse(savedUser);
+                
+                // Package the data to match your Mongoose Blueprint
+                const emiData = {
+                    userId: user.email, // We use their email to link it to them
+                    loanAmount: principal,
+                    interestRate: annualRate,
+                    tenure: years,
+                    emi: emi,
+                    totalInterest: totalInterest,
+                    totalPayment: totalPayment
+                };
+
+                // Silently send the calculation to the backend
+                fetch('http://localhost:5000/api/save-emi', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(emiData)
+                })
+                .then(res => res.json())
+                .then(data => console.log("Calculation permanently saved to cloud!"))
+                .catch(err => console.log("Failed to save calculation", err));
+            }
+            // ---------------------------------------
+
+            document.getElementById('emiResults').style.display = 'block';
+            
+            const ctx = document.getElementById('emiChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Principal Amount', 'Total Interest'],
+                    datasets: [{
+                        data: [principal, totalInterest],
+                        backgroundColor: ['#1a3a5f', '#f8b500'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: 'white'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function calculateEducationLoan() {
+            const courseFee = parseFloat(document.getElementById('courseFee').value);
+            const rate = parseFloat(document.getElementById('eduInterestRate').value);
+            const moratorium = parseFloat(document.getElementById('moratorium').value);
+            const repaymentYears = parseFloat(document.getElementById('repaymentPeriod').value);
+            
+            if (!courseFee || !rate || !moratorium || !repaymentYears) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            const moratoriumInterest = courseFee * (rate / 100) * moratorium;
+            const totalAmount = courseFee + moratoriumInterest;
+            
+            const monthlyRate = rate / 12 / 100;
+            const repaymentMonths = repaymentYears * 12;
+            
+            const numerator = totalAmount * monthlyRate * Math.pow(1 + monthlyRate, repaymentMonths);
+            const denominator = Math.pow(1 + monthlyRate, repaymentMonths) - 1;
+            const emi = numerator / denominator;
+            
+            const totalRepayment = emi * repaymentMonths;
+            const totalInterest = totalRepayment - courseFee;
+            
+            document.getElementById('eduEMI').textContent = '₹' + emi.toFixed(2);
+            document.getElementById('eduTotalInterest').textContent = '₹' + totalInterest.toFixed(2);
+            document.getElementById('eduTotalRepayment').textContent = '₹' + totalRepayment.toFixed(2);
+            
+            document.getElementById('educationResults').style.display = 'block';
+            
+            const ctx = document.getElementById('educationChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Course Fee', 'Total Interest'],
+                    datasets: [{
+                        data: [courseFee, totalInterest],
+                        backgroundColor: ['#1a3a5f', '#f8b500'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: 'white'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function findBestBanks() {
+            const loanAmount = parseFloat(document.getElementById('neededLoanAmount').value);
+            const affordableEMI = parseFloat(document.getElementById('affordableEMI').value);
+            const collateralType = document.getElementById('collateralType').value;
+            const collateralValue = parseFloat(document.getElementById('collateralValue').value) || 0;
+            
+            if (!loanAmount || !affordableEMI || !collateralType) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            const suitableBanks = banks.filter(bank => {
+                if (loanAmount < bank.minLoanAmount || loanAmount > bank.maxLoanAmount) {
+                    return false;
+                }
+                
+                if (collateralType !== 'none' && !bank.acceptedCollateral.includes(collateralType)) {
+                    return false;
+                }
+                
+                if (collateralType !== 'none' && collateralValue < loanAmount * 0.5) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            const bankResults = suitableBanks.map(bank => {
+                const monthlyRate = bank.interestRate / 12 / 100;
+                
+                const numerator = Math.log(affordableEMI / (affordableEMI - loanAmount * monthlyRate));
+                const denominator = Math.log(1 + monthlyRate);
+                const tenureMonths = numerator / denominator;
+                const tenureYears = tenureMonths / 12;
+                
+                const isTenureValid = tenureYears <= bank.maxTenure;
+                
+                const totalPayment = affordableEMI * tenureMonths;
+                const totalInterest = totalPayment - loanAmount;
+                
+                return {
+                    ...bank,
+                    tenureYears: tenureYears.toFixed(1),
+                    tenureMonths: Math.round(tenureMonths),
+                    totalPayment: totalPayment.toFixed(2),
+                    totalInterest: totalInterest.toFixed(2),
+                    isTenureValid
+                };
+            });
+            
+            bankResults.sort((a, b) => a.interestRate - b.interestRate);
+            
+            displayBankResults(bankResults, loanAmount, affordableEMI);
+        }
+        
+        function displayBankResults(bankResults, loanAmount, affordableEMI) {
+            const bankListElement = document.getElementById('bankList');
+            bankListElement.innerHTML = '';
+            
+            if (bankResults.length === 0) {
+                bankListElement.innerHTML = `
+                    <div class="no-results">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <h4>No Banks Found</h4>
+                        <p>Sorry, we couldn't find any banks matching your requirements. Please try adjusting your inputs.</p>
+                    </div>
+                `;
+            } else {
+                bankResults.forEach(bank => {
+                    const bankCard = document.createElement('div');
+                    bankCard.className = 'bank-card';
+                    
+                    bankCard.innerHTML = `
+                        <div class="bank-header">
+                            <div class="bank-logo">${bank.logo}</div>
+                            <div class="bank-name">${bank.name}</div>
+                        </div>
+                        <div class="bank-details">
+                            <div class="bank-detail-item">
+                                <div class="bank-detail-label">Interest Rate</div>
+                                <div class="bank-detail-value">${bank.interestRate}%</div>
+                            </div>
+                            <div class="bank-detail-item">
+                                <div class="bank-detail-label">Loan Amount</div>
+                                <div class="bank-detail-value">₹${loanAmount.toLocaleString('en-IN')}</div>
+                            </div>
+                            <div class="bank-detail-item">
+                                <div class="bank-detail-label">Monthly EMI</div>
+                                <div class="bank-detail-value">₹${affordableEMI.toLocaleString('en-IN')}</div>
+                            </div>
+                            <div class="bank-detail-item">
+                                <div class="bank-detail-label">Tenure</div>
+                                <div class="bank-detail-value">${bank.tenureYears} years (${bank.tenureMonths} months)</div>
+                            </div>
+                            <div class="bank-detail-item">
+                                <div class="bank-detail-label">Total Interest</div>
+                                <div class="bank-detail-value">₹${parseFloat(bank.totalInterest).toLocaleString('en-IN')}</div>
+                            </div>
+                            <div class="bank-detail-item">
+                                <div class="bank-detail-label">Total Payment</div>
+                                <div class="bank-detail-value">₹${parseFloat(bank.totalPayment).toLocaleString('en-IN')}</div>
+                            </div>
+                        </div>
+                        <div class="bank-highlight">
+                            <div class="bank-highlight-title">Bank Details</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="bank-detail-label">Processing Fee</div>
+                                    <div class="bank-detail-value">${bank.processingFee}%</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="bank-detail-label">Prepayment Charges</div>
+                                    <div class="bank-detail-value">${bank.prepaymentCharges}</div>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <div class="bank-detail-label">Special Features</div>
+                                <div class="bank-detail-value">${bank.specialFeatures}</div>
+                            </div>
+                        </div>
+                        <button class="apply-btn" onclick="applyForLoan('${bank.name}')">Apply Now</button>
+                    `;
+                    
+                    bankListElement.appendChild(bankCard);
+                });
+            }
+            
+            document.getElementById('bankResults').style.display = 'block';
+        }
+        
+        function applyForLoan(bankName) {
+            alert(`Thank you for your interest in ${bankName}! You will be redirected to their loan application page.`);
+        }
+        
+        function calculateInsurance() {
+            const sumAssured = parseFloat(document.getElementById('sumAssured').value);
+            const premium = parseFloat(document.getElementById('annualPremium').value);
+            const term = parseFloat(document.getElementById('policyTerm').value);
+            
+            if (!sumAssured || !premium || !term) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            const totalPremiums = premium * term;
+            const coverageRatio = sumAssured / totalPremiums;
+            const costOfCoverage = premium / (sumAssured / 100000);
+            
+            document.getElementById('totalPremiums').textContent = '₹' + totalPremiums.toFixed(2);
+            document.getElementById('coverageRatio').textContent = coverageRatio.toFixed(1) + 'x';
+            document.getElementById('costOfCoverage').textContent = '₹' + costOfCoverage.toFixed(2) + ' per ₹1L';
+            
+            document.getElementById('insuranceResults').style.display = 'block';
+            
+            const ctx = document.getElementById('insuranceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Sum Assured', 'Total Premiums'],
+                    datasets: [{
+                        label: 'Amount (₹)',
+                        data: [sumAssured, totalPremiums],
+                        backgroundColor: ['#1a3a5f', '#f8b500'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: 'white'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: 'white'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'white'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function calculateGoldLoan() {
+            const weight = parseFloat(document.getElementById('goldWeight').value);
+            const purity = parseFloat(document.getElementById('goldPurity').value);
+            const rate = parseFloat(document.getElementById('goldRate').value);
+            
+            if (!weight || !purity || !rate) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            const pureGold = weight * (purity / 24);
+            const goldValue = pureGold * rate;
+            const eligibleLoan = goldValue * 0.75;
+            
+            document.getElementById('goldValue').textContent = '₹' + goldValue.toFixed(2);
+            document.getElementById('eligibleLoan').textContent = '₹' + eligibleLoan.toFixed(2);
+            
+            document.getElementById('goldResults').style.display = 'block';
+            
+            const ctx = document.getElementById('goldChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Eligible Loan (75%)', 'Remaining Value (25%)'],
+                    datasets: [{
+                        data: [eligibleLoan, goldValue - eligibleLoan],
+                        backgroundColor: ['#f8b500', '#e63946'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: 'white'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        // --- BACKEND INTEGRATION: Sign Up Logic ---
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
+            e.preventDefault(); // Stop the page from refreshing
+
+            // 1. Grab the data from the form
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const alertBox = document.getElementById('signupAlert');
+
+            try {
+                // 2. Send the data to your Node.js backend
+                const response = await fetch('http://localhost:5000/api/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                const data = await response.json();
+
+                // 3. Show success or error messages
+                alertBox.classList.remove('d-none', 'alert-danger', 'alert-success');
+                
+                if (response.ok) {
+                    alertBox.classList.add('alert-success');
+                    alertBox.textContent = "Account created successfully!";
+                    
+                    // SAVE TO MEMORY!
+                    localStorage.setItem('financial_user', JSON.stringify(data.user));
+                    
+                    // Update the navbar
+                    updateAuthUI();
+
+                    setTimeout(() => {
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
+                        modal.hide();
+                    }, 1500); // Clear the form
+                } else {
+                    alertBox.classList.add('alert-danger');
+                    alertBox.textContent = data.message || "Signup failed.";
+                }
+
+            } catch (error) {
+                alertBox.classList.remove('d-none');
+                alertBox.classList.add('alert-danger');
+                alertBox.textContent = "Cannot connect to server. Is it running?";
+            }
+        });
+
+        // --- BACKEND INTEGRATION: Login Logic ---
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault(); 
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const alertBox = document.getElementById('loginAlert');
+
+            try {
+                const response = await fetch('http://localhost:5000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                alertBox.classList.remove('d-none', 'alert-danger', 'alert-success');
+                
+                if (response.ok) {
+                    alertBox.classList.add('alert-success');
+                    alertBox.textContent = `Welcome back, ${data.user.name}!`;
+                    
+                    // SAVE TO MEMORY!
+                    localStorage.setItem('financial_user', JSON.stringify(data.user));
+                    
+                    // Update the navbar
+                    updateAuthUI();
+                    
+                    setTimeout(() => {
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                        modal.hide();
+                    }, 1500);
+                    
+                } else {
+                    alertBox.classList.add('alert-danger');
+                    alertBox.textContent = data.message || "Login failed.";
+                }
+
+            } catch (error) {
+                alertBox.classList.remove('d-none');
+                alertBox.classList.add('alert-danger');
+                alertBox.textContent = "Cannot connect to server.";
+            }
+        });
+
+        // --- STATE MANAGEMENT: Check if user is logged in ---
+        function updateAuthUI() {
+            const loggedOutView = document.getElementById('loggedOutView');
+            const loggedInView = document.getElementById('loggedInView');
+            const userGreeting = document.getElementById('userGreeting');
+            
+            // Check the browser's memory for a saved user
+            const savedUser = localStorage.getItem('financial_user');
+
+            if (savedUser) {
+                // User is logged in! Parse the string back into an object
+                const user = JSON.parse(savedUser);
+                
+                // Hide login/signup, show profile
+                loggedOutView.classList.add('d-none');
+                loggedInView.classList.remove('d-none');
+                
+                // Update the greeting
+                userGreeting.textContent = `Welcome, ${user.name}!`;
+            } else {
+                // User is NOT logged in
+                loggedOutView.classList.remove('d-none');
+                loggedInView.classList.add('d-none');
+            }
+        }
+
+        // Run this function immediately when the page loads
+        updateAuthUI();
+
+        // --- BACKEND INTEGRATION: Logout Logic ---
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            // Remove the user from memory
+            localStorage.removeItem('financial_user');
+            
+            // Update the UI back to the logged-out state
+            updateAuthUI();
+            
+            // Optional: Give them a little goodbye alert
+            alert("You have been successfully logged out.");
+        });
+
+    </script>
+</body>
+</html>     
